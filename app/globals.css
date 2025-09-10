@@ -1,26 +1,229 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --green: #d0ff71;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+  height: 100%;
 }
 
 body {
-  background: var(--background);
+  position: relative;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  min-height: 100%;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/back.gif");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 150px;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Use Antonio for headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-antonio), system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  letter-spacing: -0.02em;
+}
+.bg-green {
+  background-color: var(--green);
+}
+.btn-fancy {
+  --btn-bg: #ffffff;
+  --btn-fg: #000000;
+  --btn-accent: #a3e635;
+  --btn-fill: #d0ff71;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  /* font-size: 0.85rem; */
+  letter-spacing: 0.5px;
+  padding: 0 1.8rem;
+  /* height: 2.4rem; */
+  border-radius: 9999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.1s ease, transform 0.1s ease;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.btn-fancy:focus-visible {
+  outline: 2px solid #bef264;
+  outline-offset: 2px;
+}
+
+.btn-fancy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--btn-fill);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+  z-index: -1;
+}
+
+.btn-fancy:hover::before,
+.btn-fancy:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.btn-fancy:hover {
+  color: #0c0c0c;
+}
+
+.btn-fancy:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+.btn-fancy[data-variant="outline"] {
+  background: transparent;
+  color: var(--btn-accent);
+  box-shadow: 0 0 0 1px #3f3f46 inset;
+}
+
+.btn-fancy[data-variant="outline"]::before {
+  background: var(--btn-fill);
+}
+
+.btn-fancy[data-variant="outline"]:hover {
+  color: #0c0c0c;
+}
+
+.width-transition {
+  transition-property: width;
+  transition-duration: 0.45s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+}
+
+/* Hand: comes from top -> center -> goes back up (0% - 40% of cycle) */
+@keyframes handSequential {
+  0% {
+    opacity: 0;
+    transform: translateY(-90px) scale(0.85);
+  }
+  8% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  22% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  32% {
+    opacity: 0;
+    transform: translateY(-70px) scale(0.9);
+  }
+  40% {
+    opacity: 0;
+    transform: translateY(-110px) scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-110px) scale(0.85);
+  }
+}
+
+/* HI: starts only after hand is gone (40% - 100%) */
+@keyframes hiSequential {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.85);
+  }
+  40% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.85);
+  }
+  48% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  72% {
+    opacity: 0;
+    transform: translateY(70px) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.85);
+  }
+}
+
+.handIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: handSequential 5s infinite cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform, opacity;
+}
+
+.hiText {
+  display: block;
+  text-align: center;
+  color: #333;
+  font-size: 2.5rem;
+  opacity: 0;
+  animation: hiSequential 5s infinite cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform, opacity;
+}
+
+/* Fast side-to-side hello shake (runs continuously, only visible while parent is visible) */
+@keyframes handWave {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  15% {
+    transform: translateX(-6px) rotate(-14deg);
+  }
+  30% {
+    transform: translateX(6px) rotate(12deg);
+  }
+  45% {
+    transform: translateX(-5px) rotate(-11deg);
+  }
+  60% {
+    transform: translateX(5px) rotate(10deg);
+  }
+  75% {
+    transform: translateX(-4px) rotate(-8deg);
+  }
+  90% {
+    transform: translateX(3px) rotate(6deg);
+  }
+}
+
+.handWaver {
+  display: inline-block;
+  animation: handWave 0.9s ease-in-out infinite;
+  transform-origin: 60% 70%; /* pivot near wrist */
+  will-change: transform;
 }

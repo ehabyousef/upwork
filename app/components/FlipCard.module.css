@@ -1,0 +1,65 @@
+/* Element that actually rotates (Framer applies rotateY here) */
+.flipContainer {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.f1_card {
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  transform: translateZ(0); /* baseline depth */
+}
+/* 
+.flipContainer:hover .f1_card {
+  transform: rotateY(180deg);
+} */
+
+.f1_card .face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.f1_card .face.front {
+  z-index: 2;
+}
+
+.f1_card .face.back {
+  transform: rotateY(180deg);
+}
+
+/* Floating hand depth layer */
+.handFloating {
+  overflow: hidden;
+  position: absolute;
+  bottom: -58px;
+  width: 110px;
+  height: 110px;
+  transform-style: preserve-3d;
+  /* true 3D offset */
+  /* transform: translateX(-50%) translateZ(40px) rotateX(0deg) rotateY(0deg); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--green, #d0ff71);
+  box-shadow: 0 14px 45px -10px rgba(0, 0, 0, 0.55),
+    0 6px 16px -4px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  font-weight: 600;
+}
+
+/* .handFloating::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 40% 35%,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0) 65%
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+} */
