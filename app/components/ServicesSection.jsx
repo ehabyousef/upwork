@@ -181,7 +181,7 @@ const ServicesSection = () => {
       {/* Floating Image on Hover */}
       {hoveredService && (
         <motion.div
-          className="hidden md:fixed pointer-events-none z-50"
+          className="hidden lg:block fixed pointer-events-none z-50"
           style={{
             left: mousePosition.x + 20,
             top: mousePosition.y - 50,
