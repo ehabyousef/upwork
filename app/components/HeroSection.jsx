@@ -1,13 +1,61 @@
 "use client";
-
+import Image from "next/image";
 import { motion } from "framer-motion";
 import style from "./HeroSection.module.css";
+import model from "../../public/model.png";
+import skill from "../../public/skills (1).jpg";
+import { MdFrontHand } from "react-icons/md";
 const HeroSection = () => {
   return (
     <section
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
+      {/* small screen card  */}
+      <motion.div
+        className={`absolute lg:hidden flex items-center justify-center pointer-events-none z-30`}
+      >
+        <motion.div className={` w-64 sm:w-72 md:w-80 pointer-events-auto`}>
+          <div
+            className={`relative overflow-hidden rounded-2xl shadow-2xl bg-[#C1C2BC] h-[350px] xl:h-[450px]`}
+          >
+            <div>
+              <Image
+                src={model}
+                alt="Profile Front"
+                width={500}
+                height={600}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <Image
+                src={skill}
+                alt="Profile Back"
+                width={500}
+                height={600}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Floating hand icon with CSS-only 3D depth */}
+          <motion.div className={style.handFloating}>
+            <span className="text-2xl handIcon">
+              <span className="handWaver">
+                <MdFrontHand size={46} color="#222" />
+              </span>
+            </span>
+            <span
+              className="text-2xl hiText absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-widest"
+              aria-hidden
+            >
+              HI
+            </span>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+      {/* end small screen card  */}
       <div className="container px-12 xl:px-0 flex flex-col xl:flex-row items-center justify-between xl:justify-around h-screen xl:ml-[6rem]">
         <motion.div
           initial={{ opacity: 0, x: -50 }}

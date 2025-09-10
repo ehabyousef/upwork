@@ -10,18 +10,6 @@ import { useRef, useEffect, useState } from "react";
 export default function CenterCard() {
   const cardRef = useRef(null);
   const handRef = useRef(null);
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
-
-  // Check screen size
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsLargeScreen(window.innerWidth >= 1024); // lg breakpoint
-    };
-
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
 
   const { scrollYProgress } = useScroll({
     target: cardRef,
@@ -33,11 +21,7 @@ export default function CenterCard() {
     offset: ["start end", "end start"],
   });
   // Transform for the flip rotation based on scroll - 3D rotation with both X and Y
-  const rotateY = useTransform(
-    scrollY,
-    [0, 1000, 2000],
-    isLargeScreen ? [0, 180, 360] : [0, 0, 0]
-  );
+  const rotateY = useTransform(scrollY, [0, 1000, 2000], [0, 180, 360]);
   const rotateX = useTransform(
     scrollY,
     [0, 500, 1000, 1500, 2000],
@@ -47,30 +31,21 @@ export default function CenterCard() {
   const rotateZ = useTransform(scrollY, [0, 1000, 2000], [0, 8, 5]);
 
   // Transform for additional movement during scroll
-  const translateX = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    isLargeScreen ? [0, 0, 400] : [0, 0, 0]
-  );
+  const translateX = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, 330]);
   const scale = useTransform(scrollY, [0, 1000, 2000], [1, 1.1, 1.15]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 1]); // Keep visible
   const transform = useTransform(
     handScroll,
     [0, 1],
-    isLargeScreen
-      ? [
-          "translateX(-50%) translateZ(20px) rotateX(0deg) rotateY(0deg) scale(1.5)",
-          "translateX(-50%) translateZ(30px) rotateX(10deg) rotateY(-10deg) scale(0)",
-        ]
-      : [
-          "translateX(-50%) translateZ(20px) rotateX(0deg) rotateY(0deg) scale(1)",
-          "translateX(-50%) translateZ(20px) rotateX(0deg) rotateY(0deg) scale(1)",
-        ]
+    [
+      "translateX(-50%) translateZ(20px) rotateX(0deg) rotateY(0deg) scale(1.5)",
+      "translateX(-50%) translateZ(30px) rotateX(10deg) rotateY(-10deg) scale(0)",
+    ]
   );
   return (
     <motion.div
       ref={cardRef}
-      className={`lg:fixed lg:inset-0 flex items-center justify-center pointer-events-none z-30`}
+      className={`hidden fixed inset-0 lg:flex items-center justify-center pointer-events-none z-30`}
     >
       <motion.div
         style={{
@@ -80,7 +55,7 @@ export default function CenterCard() {
           rotate: rotateZ,
           scale,
         }}
-        className={`${style.flipContainer} w-64 sm:w-72 md:w-80 pointer-events-auto`}
+        className={`${style.flipContainer} w-64 sm:w-56 md:w-60 xl:w-80 pointer-events-auto`}
       >
         <div
           className={`${style.f1_card} overflow-hidden rounded-2xl shadow-2xl bg-[#C1C2BC] h-[350px] xl:h-[450px]`}

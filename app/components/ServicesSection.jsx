@@ -73,7 +73,7 @@ const ServicesSection = () => {
   return (
     <section
       id="services"
-      className="min-h-screen flex items-center relative overflow-hidden"
+      className="h-[85vh] md:min-h-screen flex items-center relative overflow-hidden"
     >
       <div className="container mx-auto px-10 xl:px-52 relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -181,7 +181,7 @@ const ServicesSection = () => {
       {/* Floating Image on Hover */}
       {hoveredService && (
         <motion.div
-          className="fixed pointer-events-none z-50"
+          className="hidden md:fixed pointer-events-none z-50"
           style={{
             left: mousePosition.x + 20,
             top: mousePosition.y - 50,

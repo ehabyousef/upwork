@@ -29,7 +29,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="min-h-screen flex items-center relative overflow-hidden"
+      className="h-[85vh] md:min-h-screen flex items-center relative overflow-hidden"
     >
       <div className="container mx-auto px-12 xl:px-52 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
