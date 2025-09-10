@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import { PiDribbbleLogoFill, PiInstagramLogoFill } from "react-icons/pi";
 import { FaBehanceSquare } from "react-icons/fa";
+import Link from "next/link";
 // Counter component for animated numbers
 function Counter({ from = 0, to, suffix = "", inView }) {
   const count = useMotionValue(from);
@@ -107,18 +108,18 @@ export default function AboutSection() {
 
             {/* Social Icons */}
             <div className="flex justify-start mb-0">
-              <a href="#" className="w-12 h-12 rounded-lg">
+              <Link href="/" className="w-12 h-12 rounded-lg">
                 <FaXTwitter size={30} />
-              </a>
-              <a href="#" className="w-12 h-12 rounded-lg">
+              </Link>
+              <Link href="/" className="w-12 h-12 rounded-lg">
                 <PiInstagramLogoFill size={30} />
-              </a>
-              <a href="#" className="w-12 h-12 rounded-lg">
+              </Link>
+              <Link href="/" className="w-12 h-12 rounded-lg">
                 <FaBehanceSquare size={30} />
-              </a>
-              <a href="#" className="w-12 h-12 rounded-lg">
+              </Link>
+              <Link href="/" className="w-12 h-12 rounded-lg">
                 <PiDribbbleLogoFill size={30} />
-              </a>
+              </Link>
             </div>
 
             {/* My Story Button */}

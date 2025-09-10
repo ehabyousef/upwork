@@ -16,8 +16,11 @@ const antonio = Antonio({
 });
 
 export const metadata = {
-  title: "freamer - template",
-  description: "upwork framer template",
+  title: "ehab yousef",
+  description: "egy-based digital designer and front-end developer",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }) {

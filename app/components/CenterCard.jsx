@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import model from "../../public/model.png";
-import skill from "../../public/skills (1).jpg";
+import backPc from "../../public/pc.jpeg";
 import { MdFrontHand } from "react-icons/md";
 import style from "./FlipCard.module.css";
 import { useRef, useEffect, useState } from "react";
@@ -42,6 +42,17 @@ export default function CenterCard() {
       "translateX(-50%) translateZ(30px) rotateX(10deg) rotateY(-10deg) scale(0)",
     ]
   );
+
+  // Change how we detect which face to show
+  const showBack = useTransform(scrollY, (value) => {
+    const normalizedRotation = ((value % 2000) / 2000) * 360;
+    return normalizedRotation > 90 && normalizedRotation < 270;
+  });
+
+  // Get front and back opacity as separate motion values
+  const frontOpacity = useTransform(showBack, (isBack) => (isBack ? 0 : 1));
+  const backOpacity = useTransform(showBack, (isBack) => (isBack ? 1 : 0));
+
   return (
     <motion.div
       ref={cardRef}
@@ -60,7 +71,10 @@ export default function CenterCard() {
         <div
           className={`${style.f1_card} overflow-hidden rounded-2xl shadow-2xl bg-[#C1C2BC] h-[350px] xl:h-[450px]`}
         >
-          <div className={`${style.face} ${style.front}`}>
+          <motion.div
+            className={`${style.face} ${style.front}`}
+            style={{ opacity: frontOpacity }}
+          >
             <Image
               src={model}
               alt="Profile Front"
@@ -68,16 +82,19 @@ export default function CenterCard() {
               height={600}
               className="w-full h-full object-cover"
             />
-          </div>
-          <div className={`${style.face} ${style.back}`}>
+          </motion.div>
+          <motion.div
+            className={`${style.face} ${style.back}`}
+            style={{ opacity: backOpacity }}
+          >
             <Image
-              src={skill}
+              src={backPc}
               alt="Profile Back"
               width={500}
               height={600}
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
         </div>
 
         {/* Floating hand icon with CSS-only 3D depth */}

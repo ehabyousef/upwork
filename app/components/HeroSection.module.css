@@ -17,3 +17,12 @@
   pointer-events: none;
   font-weight: 600;
 }
+
+@media (max-width: 800px) {
+  .handFloating {
+    bottom: 30px;
+    left: -30px;
+    width: 60px;
+    height: 60px;
+  }
+}

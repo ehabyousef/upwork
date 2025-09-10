@@ -107,24 +107,25 @@ const Navbar = () => {
                         onMouseLeave={() => setHoveredIndex(null)}
                       >
                         <motion.a
+                          key={`first-${href}`}
                           href={href}
                           animate={{
                             opacity: hoveredIndex === i ? 0 : 1,
                             y: hoveredIndex === i ? -20 : 0,
                           }}
                           transition={{ duration: 0.28, ease: "easeOut" }}
-                          className="text-neutral-200 hover:text-lime-300 transition-colors duration-200"
+                          className="text-neutral-200 transition-colors duration-200"
                         >
                           {label}
                         </motion.a>
                         <motion.a
+                          key={`second-${href}`}
                           href={href}
-                          className="absolute left-0 top-0 text-neutral-200 hover:text-lime-300 transition-colors duration-200"
-                          animate={
-                            hoveredIndex === i
-                              ? { opacity: 1, y: 0 }
-                              : { opacity: 0, y: 20 }
-                          }
+                          className="absolute left-0 top-0 text-lime-300 transition-colors duration-200"
+                          animate={{
+                            opacity: hoveredIndex === i ? 1 : 0,
+                            y: hoveredIndex === i ? 0 : 20,
+                          }}
                           transition={{ duration: 0.28, ease: "easeOut" }}
                         >
                           {label}
