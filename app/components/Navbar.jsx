@@ -11,6 +11,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false); // mobile menu
   const [scrolled, setScrolled] = useState(false); // detect scroll
   const [expanded, setExpanded] = useState(false); // override mini width when clicked on avatar
+  const [hoveredIndex, setHoveredIndex] = useState(null); // desktop nav hover swap
 
   // scroll the nav appear
   const { y: currentScrollY } = useWindowScroll();
@@ -97,18 +98,40 @@ const Navbar = () => {
                     ["About", "#about"],
                     ["Projects", "#projects"],
                     ["Blogs", "#blogs"],
-                  ].map(([label, href], i) => (
-                    <motion.a
-                      key={href}
-                      href={href}
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-neutral-200 hover:text-lime-300 transition-colors duration-200"
-                    >
-                      {label}
-                    </motion.a>
-                  ))}
+                  ].map(([label, href], i) => {
+                    return (
+                      <div
+                        key={href}
+                        className="relative flex flex-col overflow-hidden h-6"
+                        onMouseEnter={() => setHoveredIndex(i)}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                      >
+                        <motion.a
+                          href={href}
+                          animate={{
+                            opacity: hoveredIndex === i ? 0 : 1,
+                            y: hoveredIndex === i ? -20 : 0,
+                          }}
+                          transition={{ duration: 0.28, ease: "easeOut" }}
+                          className="text-neutral-200 hover:text-lime-300 transition-colors duration-200"
+                        >
+                          {label}
+                        </motion.a>
+                        <motion.a
+                          href={href}
+                          className="absolute left-0 top-0 text-neutral-200 hover:text-lime-300 transition-colors duration-200"
+                          animate={
+                            hoveredIndex === i
+                              ? { opacity: 1, y: 0 }
+                              : { opacity: 0, y: 20 }
+                          }
+                          transition={{ duration: 0.28, ease: "easeOut" }}
+                        >
+                          {label}
+                        </motion.a>
+                      </div>
+                    );
+                  })}
                 </motion.div>
               )}
             </AnimatePresence>
